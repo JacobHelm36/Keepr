@@ -18,9 +18,14 @@ namespace Keepr.Services
             return _repo.Get();
         }
 
-        internal Keep Get(int id)
+        public IEnumerable<Keep> GetUserKeeps(string userId)
         {
-            Keep found = _repo.Get(id);
+            return _repo.GetUserKeeps(userId);
+        }
+
+        internal Keep GetById(int id)
+        {
+            Keep found = _repo.GetById(id);
             if (found == null)
             {
                 throw new Exception("Invalid Id");
@@ -28,9 +33,15 @@ namespace Keepr.Services
             return found;
         }
 
+        internal IEnumerable<VaultKeepViewModel> GetByVaultId(int vaultId, string userId)
+        {
+            return _repo.GetByVaultId(vaultId, userId);
+        }
+
         internal Keep Edit(Keep editedKeep)
         {
-            Keep found = Get(editedKeep.Id);
+            //get Id after its created
+            Keep found = GetById(editedKeep.Id);
             if (found.UserId != editedKeep.UserId)
             {
                 throw new Exception("Invalid Request");
@@ -48,7 +59,7 @@ namespace Keepr.Services
 
         public Keep Delete(int id, string userId)
         {
-            Keep found = Get(id);
+            Keep found = GetById(id);
             if (found.UserId != userId)
             {
                 throw new Exception("Invalid Request");

@@ -16,9 +16,41 @@ namespace Keepr.Controllers
         public class VaultsController : ControllerBase
     {
         private readonly VaultService _vs;
-        public VaultsController(VaultService vs)
+        private readonly VaultsKeepsService _vks;
+        private readonly KeepsService _ks;
+        public VaultsController(VaultService vs, VaultsKeepsService vks, KeepsService ks)
         {
             _vs = vs;
+            _vks = vks;
+            _ks = ks;
+        }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<Vault>> Get()
+        {
+            try
+            {
+                return Ok(_vs.Get());
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("myVaults")]  // api/blogs/myblogs
+        [Authorize]
+        public ActionResult<IEnumerable<Vault>> GetUserVaults()
+        {
+            try
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                return Ok(_vs.GetUserVaults(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpGet("{id}")]
@@ -26,7 +58,8 @@ namespace Keepr.Controllers
         {
           try
           {
-              return Ok(_vs.Get(id));
+              string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+              return Ok(_vs.Get(id, userId));
           }
           catch (Exception e)
           {
@@ -34,7 +67,24 @@ namespace Keepr.Controllers
           }
         }
 
+        [HttpGet("{id}/keeps")]
+        [Authorize]
+        // finds a vaultkeep by vault id
+        public ActionResult<IEnumerable<VaultKeepViewModel>> GetKeepsByVaultId(int id)
+        {
+            try
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                return Ok(_ks.GetByVaultId(id, userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpPost]
+        //Creates a vault
         [Authorize]
         public ActionResult<Vault> Create([FromBody] Vault newVault)
         {
@@ -51,6 +101,7 @@ namespace Keepr.Controllers
         }
 
         [HttpDelete("{id}")]
+        // Deletes a vault
         [Authorize]
         public ActionResult<Vault> Delete(int id)
         {

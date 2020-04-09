@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace Keepr.Controllers
 {
   [ApiController]
-  [Route("api/[controller")]
-  public class VaultsKeepsController : BaseController
+  [Route("api/[controller]")]
+  public class VaultKeepsController : ControllerBase
   {
     private readonly VaultsKeepsService _vks;
 
-    public VaultsKeepsController(VaultsKeepsService vks)
+    public VaultKeepsController(VaultsKeepsService vks)
     {
       _vks = vks;
     }
@@ -26,10 +26,25 @@ namespace Keepr.Controllers
       try
       {
           string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
-          newVaultKeep.Id = userId;
+          newVaultKeep.UserId = userId;
           return Ok(_vks.Create(newVaultKeep));
       }
       catch (Exception e)
+      {
+          return BadRequest(e.Message);
+      }
+    }
+
+    [HttpDelete("{id}")]
+    [Authorize]
+    public ActionResult<VaultKeep> Delete(int id)
+    {
+      try
+      {
+          string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+          return Ok(_vks.Delete(id, userId));
+      }
+      catch (Exception e) 
       {
           return BadRequest(e.Message);
       }

@@ -13,12 +13,26 @@ namespace Keepr.Services
       _repo = repo;
     }
 
-    internal Vault Get(int id)
+        internal IEnumerable<Vault> Get()
+        {
+            return _repo.GetPublic();
+        }
+
+    internal IEnumerable<Vault> GetUserVaults(string userId)
+    {
+        return _repo.GetUserVaults(userId);
+    }
+
+    internal Vault Get(int id, string userId)
     {
       Vault found = _repo.Get(id);
       if (found == null)
       {
         throw new Exception("Invalid Id");
+      }
+      if (found.UserId != userId)
+      {
+        throw new Exception("You are not the owner");
       }
       return found;
     }
@@ -30,7 +44,7 @@ namespace Keepr.Services
 
     internal Vault Delete(int id, string userId)
     {
-      Vault found = Get(id);
+      Vault found = Get(id, userId);
       if (found.UserId != userId)
       {
         throw new Exception("Invalid Request");

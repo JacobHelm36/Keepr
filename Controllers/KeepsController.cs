@@ -21,7 +21,6 @@ namespace Keepr.Controllers
             _ks = ks;
         }
         [HttpGet]
-
         // TODO make path to GET public keeps
         public ActionResult<IEnumerable<Keep>> Get()
         {
@@ -35,12 +34,37 @@ namespace Keepr.Controllers
             };
         }
 
+        [HttpGet("myKeeps")]  // api/blogs/myblogs
+        [Authorize]
+        public ActionResult<IEnumerable<Keep>> GetUserKeeps()
+        {
+            try
+            {
+                string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                return Ok(_ks.GetUserKeeps(userId));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
         [HttpGet("{id}")]
         public ActionResult<Keep> Get(int id)
         {
             try
             {
-                return Ok(_ks.Get(id));
+                Keep keep = _ks.GetById(id);
+                if (keep.IsPrivate)
+                {
+                    var user = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+                    if (user != null && user.Value == keep.UserId)
+                    {
+                        return Ok(keep);
+                    }
+                    return Unauthorized("You don't have access to this Keep");
+                }
+                return Ok(keep);
             }
             catch (Exception e)
             {
@@ -58,7 +82,7 @@ namespace Keepr.Controllers
             {
                 string userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
                 editedKeep.UserId = userId;
-                editedKeep.Id = id;
+                // editedKeep.Id = id;
                 return Ok(_ks.Edit(editedKeep));
             }
             catch (Exception e)
