@@ -1,9 +1,8 @@
 <template>
   <div class="home">
-    <h1>Welcome Home</h1>
+    <h1 class="text-center mt-3">Welcome Home</h1>
       <div class="keeps container-fluid">
-      <p>These are your Keeps</p>
-      <AddKeep />
+      <AddKeep class="text-center mb-4 mt-3" />
       <div class="row">
           <keepCards v-for="keepObj in publicKeeps" :key="keepObj.id" :keepData="keepObj" />
       </div>

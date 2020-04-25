@@ -1,5 +1,5 @@
 <template>
-  <div class="keeps container-fluid bg-dark">
+  <div class="keeps container-fluid bg-dark text-white">
     <p>These are your Keeps</p>
     <AddKeep />
     <div class="row">

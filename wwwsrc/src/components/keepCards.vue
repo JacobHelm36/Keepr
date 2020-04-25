@@ -5,10 +5,10 @@
       <div class="card-body">
         <h5 class="card-title">{{keepData.name}}</h5>
         <p class="card-text">{{keepData.description}}</p>
-        <button v-if="this.$route.name == 'dashboard' && keepData.userId == this.$auth.user.sub" @click="deleteKeep" class="btn-danger">Delete Keep</button>
+        <button v-if="this.$route.name == 'dashboard' || this.$route.name == 'home' && keepData.userId == this.$auth.user.sub" @click="deleteKeep" class="btn-danger">Delete Keep</button>
         <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
+          Choose a vault
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" href="#" v-for="vault in userVaults" :key="vault.id" @click="createVaultKeep(keepData.id, vault.id)">{{vault.name}}</a>
