@@ -5,7 +5,7 @@
       <div class="card-body">
         <h5 class="card-title">{{keepData.name}}</h5>
         <p class="card-text">{{keepData.description}}</p>
-        <button v-if="keepData.userId == this.$auth.user.sub" @click="deleteKeep" class="btn-danger">Delete Keep</button>
+        <button v-if="this.$route.name == 'dashboard' && keepData.userId == this.$auth.user.sub" @click="deleteKeep" class="btn-danger">Delete Keep</button>
         <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown button

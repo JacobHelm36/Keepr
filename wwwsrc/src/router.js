@@ -5,8 +5,6 @@ import Home from "./views/Home.vue";
 // @ts-ignore
 import Keeps from "./views/Keeps.vue";
 // @ts-ignore
-import Vaults from "./views/Vaults.vue";
-// @ts-ignore
 import Dashboard from "./views/Dashboard.vue";
 // @ts-ignore
 import VaultKeeps from "./views/VaultKeep.vue";
@@ -25,11 +23,6 @@ export default new Router({
       path: "/keeps",
       name: "keeps",
       component: Keeps
-    },
-    {
-      path: "/vaults",
-      name: "vaults",
-      component: Vaults
     },
     {
       path: "/dashboard",

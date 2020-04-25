@@ -24,11 +24,6 @@
             >Keeps</router-link
           >
         </li>
-        <li class="nav-item" :class="{ active: $route.name == 'vaults' }">
-          <router-link :to="{ name: 'vaults' }" class="nav-link"
-            >Vaults</router-link
-          >
-        </li>
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
