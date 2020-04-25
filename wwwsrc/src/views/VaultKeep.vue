@@ -1,8 +1,8 @@
 <template>
   <div class="VaultKeep">
     <div class="text-center">
-      <p>Your Vault with all the keeps</p>
-      <div class="row">
+      <h2 class="text-white">Your Vault with all the keeps</h2>
+      <div class="row ml-3">
         <keepCards v-for="keep in vaultKeeps" :key="keep.id" :keepData="keep" />
       </div>
     </div>

@@ -1,8 +1,8 @@
 <template>
-  <div class="keeps container-fluid bg-dark text-white">
-    <p>These are your Keeps</p>
+  <div class="keeps container-fluid bg-dark">
+    <p class="text-white mt-3 pt-3">These are your Keeps</p>
     <AddKeep />
-    <div class="row">
+    <div class="row pb-3">
         <keepCards v-for="keepObj in publicKeeps" :key="keepObj.id" :keepData="keepObj" />
     </div>
   </div>
