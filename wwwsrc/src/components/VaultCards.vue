@@ -2,7 +2,7 @@
   <div class="vaultCards m-2" >
     <div class="card" style="width: 18rem;">
       <div class="card-body">
-        <h5 class="card-title">{{vaultData.name}}</h5>
+        <h3 class="card-title">{{vaultData.name}}</h3>
         <p class="card-text">{{vaultData.description}}</p>
         <router-link :to="{ name: 'vaultKeeps', params:{id:vaultData.id} }">
           <button @click="setActiveVault">View vault</button>

@@ -19,11 +19,11 @@
             >Home</router-link
           >
         </li>
-        <li class="nav-item" :class="{ active: $route.name == 'keeps' }">
+        <!-- <li class="nav-item" :class="{ active: $route.name == 'keeps' }">
           <router-link :to="{ name: 'keeps' }" class="nav-link"
             >Keeps</router-link
           >
-        </li>
+        </li> -->
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"

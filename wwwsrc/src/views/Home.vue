@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <h1 class="text-center mt-3">Welcome Home</h1>
+    <h1 class="text-center mt-3">The forum for everybody's posts.</h1>
       <div class="keeps container-fluid">
-      <AddKeep class="text-center mb-4 mt-3" />
       <div class="search-wrapper">
-        <input class="form-control" type="text" v-model="search" placeholder="  search..." />
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" v-model="search" />
       </div>
+      <AddKeep class="text-center mb-4 mt-3" />
       <div class="row">
-          <keepCards v-for="keepObj in publicKeeps" :key="keepObj.id" :keepData="keepObj" />
+          <keepCards v-for="keep in filteredList" :key="keep.id" :keepData="keep" />
       </div>
     </div>
   </div>
@@ -24,11 +24,17 @@ export default {
     };
   },
   computed: {
+    filteredList() {
+      return this.publicKeeps.filter(keep => {
+        return keep.name.toLowerCase().includes(this.search.toLowerCase());
+      });
+    },
     user() {
       return this.$store.state.user;
     },
     publicKeeps() {
       return this.$store.state.publicKeeps;
+      console.log(this.$store.state.publicKeeps)
     },
     },
   methods: {
@@ -46,3 +52,10 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+
+
+
+</style>

@@ -20,7 +20,7 @@
                 v-model="newKeep.img"
               />
             </div>
-            
+
             <div class="form-group-inline my-1 row">
               <h5 class="text-white mt-2 col-5">Name:</h5>
               <input
@@ -39,11 +39,6 @@
                 v-model="newKeep.description"
               />
             </div>
-            <input type="radio" id="0" value=0 v-model="picked">
-            <label for="0">Public</label>
-            <br>
-            <input type="radio" id="1" value=1 v-model="picked">
-            <label for="1">Private</label>
           </div>
           <div class="modal-footer">
             <button
@@ -71,15 +66,17 @@ export default {
         name: "",
         description: "",
         img: "",
-        isPrivate: this.picked
-      },
-      picked: Boolean
+        isPrivate: false
+      }
     }
   },
   computed:{},
   methods:{
     addKeep() {
-      this.$store.dispatch("addKeep", this.newKeep)
+      let nkeep = this.$store.dispatch("addKeep", this.newKeep);
+      // this.newKeep.name = ""
+      // this.newKeep.description = ""
+      // this.newKeep.img = ""
     }
   },
   components:{}
