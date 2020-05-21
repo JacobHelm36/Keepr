@@ -19,11 +19,6 @@
             >Home</router-link
           >
         </li>
-        <!-- <li class="nav-item" :class="{ active: $route.name == 'keeps' }">
-          <router-link :to="{ name: 'keeps' }" class="nav-link"
-            >Keeps</router-link
-          >
-        </li> -->
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
@@ -63,10 +58,21 @@ export default {
       this.$store.dispatch("setBearer", this.$auth.bearer);
       console.log("this.$auth.user: ");
       console.log(this.$auth.user);
+      this.$store.dispatch("getUserVaults");
     },
     async logout() {
       this.$store.dispatch("resetBearer");
       await this.$auth.logout({ returnTo: window.location.origin });
+    }
+  },
+  data() {
+    return {
+      loggedIn: {
+        log: true
+      },
+      loggedOut: {
+        log: false
+      }
     }
   }
 };

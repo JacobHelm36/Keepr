@@ -22,7 +22,8 @@ export default new Vuex.Store({
     userKeeps: [],
     userVaults: [],
     activeVault: [],
-    vaultKeeps: []
+    vaultKeeps: [],
+    loggedIn: {}
   },
   mutations: {
     setKeeps(state, keeps) {
@@ -57,11 +58,19 @@ export default new Vuex.Store({
     },
     activeVaultKeep(state, vaultKeep) {
       state.vaultKeeps = vaultKeep
+    },
+    setLogin(state, log) {
+      state.loggedIn = log
     }
   },
   actions: {
-    setBearer({}, bearer) {
+    setBearer({commit}, bearer) {
       api.defaults.headers.authorization = bearer;
+      let login = api.defaults.headers.authorization == bearer;
+      if (login) {
+        commit("setLogin", true);
+      }
+
     },
     resetBearer() {
       api.defaults.headers.authorization = "";

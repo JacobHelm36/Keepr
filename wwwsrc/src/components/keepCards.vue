@@ -1,19 +1,36 @@
 <template>
   <div class="list m-2">
     <div class="card" style="width: 18rem;">
-      <img :src="keepData.img" class="card-img-top">
+      <img :src="keepData.img" class="card-img-top" />
       <div class="card-body">
         <h5 class="card-title">{{keepData.name}}</h5>
         <p class="card-text">{{keepData.description}}</p>
-        <button v-if="this.$route.name == 'dashboard' || this.$route.name == 'home' && keepData.userId == this.$auth.user.sub" @click="deleteKeep" class="btn-danger">Delete Keep</button>
-        <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Choose a vault
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#" v-for="vault in userVaults" :key="vault.id" @click="createVaultKeep(keepData.id, vault.id)">{{vault.name}}</a>
+        <button
+          v-if="this.$route.name == 'dashboard' || this.$route.name == 'home' && keepData.userId == checkUser"
+          @click="deleteKeep"
+          class="btn-danger"
+        >Delete Keep</button>
+        <div v-if="$auth.isAuthenticated" class="dropdown">
+          <button
+            class="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >Choose a vault</button>
+
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a
+              class="dropdown-item"
+              href="#"
+              v-for="vault in userVaults"
+              :key="vault.id"
+              @click="createVaultKeep(keepData.id, vault.id)"
+            >{{vault.name}}</a>
+          </div>
+          <button @click="testBtn">test</button>
         </div>
-      </div>
       </div>
     </div>
   </div>
@@ -23,31 +40,44 @@
 
 <script>
 export default {
-  name: 'keepCards',
+  name: "keepCards",
   mounted() {},
-  data(){
-    return {}
+  data() {
+    return {
+      user: null
+    };
   },
-  computed:{
+  computed: {
+    checkUser() {
+      if (this.$auth.user == undefined) {
+        return (this.user = null);
+      }
+      if (this.$auth.user.sub) {
+        return this.$auth.user.sub;
+      }
+    },
     userVaults() {
       return this.$store.state.userVaults;
     }
   },
-  methods:{
+  methods: {
     deleteKeep() {
-      this.$store.dispatch("deleteKeep", this.keepData)
+      this.$store.dispatch("deleteKeep", this.keepData);
     },
     createVaultKeep(keepId, vaultId) {
-      let vaultKeepObj = {keepId: keepId, vaultId: vaultId};
-      this.$store.dispatch("createVaultKeep", vaultKeepObj)
+      let vaultKeepObj = { keepId: keepId, vaultId: vaultId };
+      this.$store.dispatch("createVaultKeep", vaultKeepObj);
+    },
+    testBtn() {
+      debugger;
+      console.log(this.$store.state.userVaults);
     }
   },
-  components:{},
-  props: ["keepData"]
-}
+  components: {},
+  props: ["keepData", "vaults"]
+};
 </script>
 
 
 <style scoped>
-
 </style>

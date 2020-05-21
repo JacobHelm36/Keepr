@@ -17,12 +17,7 @@ export default new Router({
     {
       path: "/",
       name: "home",
-      component: Home
-    },
-    {
-      path: "/keeps",
-      name: "keeps",
-      component: Keeps
+      component: Home,
     },
     {
       path: "/dashboard",

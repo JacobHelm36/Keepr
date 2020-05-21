@@ -25,21 +25,20 @@ namespace Keepr.Controllers
             _ks = ks;
         }
 
-        [HttpGet]
-        public ActionResult<IEnumerable<Vault>> Get()
-        {
-            try
-            {
-                return Ok(_vs.Get());
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
-            }
-        }
+        // [HttpGet]
+        // public ActionResult<IEnumerable<Vault>> Get()
+        // {
+        //     try
+        //     {
+        //         return Ok(_vs.Get());
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         return BadRequest(e.Message);
+        //     }
+        // }
 
         [HttpGet("myVaults")]  // api/blogs/myblogs
-        [Authorize]
         public ActionResult<IEnumerable<Vault>> GetUserVaults()
         {
             try
