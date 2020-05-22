@@ -29,7 +29,6 @@
               @click="createVaultKeep(keepData.id, vault.id)"
             >{{vault.name}}</a>
           </div>
-          <button @click="testBtn">test</button>
         </div>
       </div>
     </div>
