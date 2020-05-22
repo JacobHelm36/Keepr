@@ -5,7 +5,7 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Search" v-model="search" />
       </div>
       <AddKeep v-if="this.$auth.isAuthenticated" class="text-center mb-4 mt-3" />
-    <div class="d-flex" id="wrapper">
+    <div class="d-flex sidebar-wrapper" id="wrapper">
       <!-- sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">Features coming soon </div>
@@ -14,13 +14,11 @@
         <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Popular</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
       </div>
     </div>
     <!-- page content -->
     <div id="page-content-wrapper">
-      <button class="btn btn-primary" @click="toggle" id="menu-toggle">Toggle Menu</button>
+      <button class="btn btn-primary" @click="toggle()" id="menu-toggle">Toggle Menu</button>
       <div class="container-fluid">
         <div class="row mt-3">
           <keepCards v-for="keep in filteredList" :key="keep.id" :keepData="keep" />
@@ -52,7 +50,6 @@ export default {
     },
     publicKeeps() {
       return this.$store.state.publicKeeps;
-      console.log(this.$store.state.publicKeeps);
     },
     userVaults() {
       return this.$store.state.userVaults;
@@ -60,22 +57,23 @@ export default {
   },
   methods: {
     toggle() {
-      $("#menu-toggle").click(function() {
-        $("#wrapper").toggleClass("toggled1 toggled2");
-      })
+        $("#wrapper").toggleClass("toggled1 sidebar-wrapper");
     },
     logout() {
       this.$store.dispatch("logout");
+    }, 
+    swal(){
+      if(!this.$auth.isAuthenticated){
+        Swal.fire("For more functionality login or create an account");
+      } else {
+        this.$store.dispatch("getUserVaults");
+    }
+      console.log("waiting")
     }
   },
   async mounted() {
     this.$store.dispatch("getKeeps");
-    if (await this.$auth.isAuthenticated) {
-      this.$store.dispatch("getUserVaults");
-    } 
-    // else {
-    //   Swal.fire("For more functionality login or create an account")
-    // }
+    setTimeout(this.swal, 1000);
   },
   components: {
     KeepCards,
@@ -87,10 +85,10 @@ export default {
 
 
 <style scoped>
-#sidebar-wrapper {
+.sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
-  transition: all 1s ease-out;
+  transition: .5s ease-in-out;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -111,10 +109,10 @@ export default {
   transition: .5s ease-in-out;
 }
 
-.toggled2 {
+/* .toggled2 {
   margin-left: -15rem;
   transition: .5s ease-out;
-}
+} */
 
 @media (min-width: 768px) {
   #sidebar-wrapper {
