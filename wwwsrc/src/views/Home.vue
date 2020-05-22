@@ -7,8 +7,8 @@
       <AddKeep v-if="this.$auth.isAuthenticated" class="text-center mb-4 mt-3" />
     <div class="d-flex" id="wrapper">
       <!-- sidebar -->
-    <div class="bg-light border-right" v-bind:style="" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Features coming soon </div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
         <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
@@ -18,6 +18,7 @@
         <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
       </div>
     </div>
+    <!-- page content -->
     <div id="page-content-wrapper">
       <button class="btn btn-primary" @click="toggle" id="menu-toggle">Toggle Menu</button>
       <div class="container-fluid">
@@ -59,10 +60,9 @@ export default {
   },
   methods: {
     toggle() {
-      $("#menu-toggle").click(function(e) {
-        e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-    })
+      $("#menu-toggle").click(function() {
+        $("#wrapper").toggleClass("toggled1 toggled2");
+      })
     },
     logout() {
       this.$store.dispatch("logout");
@@ -90,10 +90,7 @@ export default {
 #sidebar-wrapper {
   min-height: 100vh;
   margin-left: -15rem;
-  -webkit-transition: margin .25s ease-out;
-  -moz-transition: margin .25s ease-out;
-  -o-transition: margin .25s ease-out;
-  transition: margin .25s ease-out;
+  transition: all 1s ease-out;
 }
 
 #sidebar-wrapper .sidebar-heading {
@@ -109,9 +106,15 @@ export default {
   min-width: 100vw;
 }
 
-/* #wrapper.toggled #sidebar-wrapper {
+.toggled1 {
   margin-left: 0;
-} */
+  transition: .5s ease-in-out;
+}
+
+.toggled2 {
+  margin-left: -15rem;
+  transition: .5s ease-out;
+}
 
 @media (min-width: 768px) {
   #sidebar-wrapper {
@@ -123,9 +126,6 @@ export default {
     width: 100%;
   }
 
-  #wrapper.toggled #sidebar-wrapper {
-    margin-left: -15rem;
-  }
 
   .search-wrapper {
     width: 50%;
