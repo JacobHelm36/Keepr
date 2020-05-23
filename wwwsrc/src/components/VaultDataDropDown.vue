@@ -3,6 +3,9 @@
 
       <div class="dropdown-vaults" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" @click="addKeepToVault" value="vaultObj.id">{{vaultItem.name}}</a>
+        <a class="dropdown-item">add a vault
+          <AddVault />
+        </a>
       </div>
 
   </div>
@@ -10,6 +13,7 @@
 
 
 <script>
+import AddVault from "../components/AddVaultsModal";
 export default {
   name: "VaultDataDropDown",
   data(){
@@ -21,8 +25,9 @@ export default {
       this.$store.dispatch("addKeepToVault", this.vaultItem)
     }
   },
-  components:{},
-  props: ["vaultItem"]
+  components:{AddVault},
+  props: ["vaultItem",
+  ]
 }
 </script>
 

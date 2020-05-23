@@ -38,6 +38,7 @@
 
 
 <script>
+import AddVault from "../components/AddVaultsModal"
 export default {
   name: "keepCards",
   mounted() {},
@@ -72,11 +73,13 @@ export default {
       console.log(this.$store.state.userVaults);
     }
   },
-  components: {},
+  components: {AddVault},
   props: ["keepData", "vaults"]
 };
 </script>
 
-
 <style scoped>
+div.dropdown-menu.show {
+  text-align: center
+}
 </style>

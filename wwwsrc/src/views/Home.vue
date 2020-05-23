@@ -8,6 +8,7 @@
     <div class="d-flex sidebar-wrapper" id="wrapper">
       <!-- sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
+      <img src="happyCloud.jpeg" id="cloud" alt="...">
       <div class="sidebar-heading">Features coming soon </div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
@@ -30,7 +31,6 @@
 </template>
 
 <script>
-import ContentBar from "../components/ContentBar"
 import KeepCards from "../components/keepCards";
 import AddKeep from "../components/AddKeepModal";
 import Swal from 'sweetalert2'
@@ -67,8 +67,7 @@ export default {
         Swal.fire("For more functionality login or create an account");
       } else {
         this.$store.dispatch("getUserVaults");
-    }
-      console.log("waiting")
+      }
     }
   },
   async mounted() {
@@ -77,16 +76,20 @@ export default {
   },
   components: {
     KeepCards,
-    AddKeep,
-    ContentBar
+    AddKeep
   }
 };
 </script>
 
 
 <style scoped>
+#cloud {
+  height:100px;
+  width: 120px;
+  background: transparent;
+}
 .sidebar-wrapper {
-  min-height: 100vh;
+  min-height: 80vh;
   margin-left: -15rem;
   transition: .5s ease-in-out;
 }
