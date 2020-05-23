@@ -9,6 +9,7 @@
       <!-- sidebar -->
     <div class="bg-light border-right" id="sidebar-wrapper">
       <img src="happyCloud.jpeg" id="cloud" alt="...">
+      <a href=""></a>
       <div class="sidebar-heading">Features coming soon </div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
@@ -89,7 +90,7 @@ export default {
   background: transparent;
 }
 .sidebar-wrapper {
-  min-height: 80vh;
+  min-height: 100vh;
   margin-left: -15rem;
   transition: .5s ease-in-out;
 }
